@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block tittle %} Podcaster {% endblock tittle %}
+{% block content %} 
+<span class="text-4xl font-bold text-center mt-5"> Welcome to the Podcaster</span>
+<div class="container mx-auto mt-8 px-4">
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for podcast in podcasts %}
+        <a href="{%url 'podcast_details' podcast.slug %}" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 flex flex-col justify-between">
+            <div>
+                {% if podcast.thumbnail %}
+                    <img src="{{ podcast.thumbnail.url }}" alt="Podcast Thumbnail"
+                         class="w-full h-40 object-cover rounded-t-lg mb-4">
+                {% endif %}
+                <h3 class="text-xl font-semibold mb-2 text-gray-800">{{ podcast.title }}</h3>
+                <p class="text-teal-600 font-medium mb-1">By {{ podcast.author }}</p>
+                <p class="text-gray-600 text-sm mb-4">{{ podcast.description|truncatewords:20 }}</p>
+            </div>
+        </a>
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500">No podcasts uploaded yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+ 

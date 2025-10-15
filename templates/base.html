@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Podcaster{% endblock title %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-col min-h-screen bg-gray-50 text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between bg-black text-white px-6 py-4 shadow-md">
+        <!-- Left section -->
+        <ul class="flex items-center space-x-6">
+            <li>
+                <a href="/" class="hover:text-green-400 font-semibold">Home</a>
+            </li>
+            
+            {% if user.is_authenticated %}
+            <li>
+                <a href="{% url 'podcast_list' %}" class="hover:text-green-400 font-semibold">Podcasts</a>
+            </li>
+            <li>
+                <a href="{% url 'upload_podcast' %}" class="hover:text-green-400 font-semibold">Upload</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <!-- Center logo -->
+        <div>
+            <a href="/" class="text-2xl font-bold text-green-400 hover:text-green-300 transition">Podcaster</a>
+        </div>
+
+        <!-- Right section -->
+        <ul class="flex items-center space-x-6">
+            {% if user.is_authenticated %}
+            <li class="text-gray-300">
+                Logged in as: <span class="font-semibold text-green-400">{{ user.username }}</span>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="hover:text-green-400 font-semibold">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'login' %}" class="hover:text-green-400 font-semibold">Login</a>
+            </li>
+            <li>
+                <a href="{% url 'register' %}" class="hover:text-green-400 font-semibold">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Page content -->
+    <main class="flex-grow container mx-auto px-6 py-10">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 text-center py-4 mt-auto">
+        <p>© {{ now|date:"Y" }} Podcaster. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
